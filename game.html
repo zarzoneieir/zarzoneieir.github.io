@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Избегай препятствия</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #gameCanvas {
+            border: 1px solid #000;
+            background-color: #fff;
+        }
+        .score {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="score">Счёт: <span id="score">0</span></div>
+    <canvas id="gameCanvas" width="600" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreDisplay = document.getElementById('score');
+        
+        let score = 0;
+        let gameOver = false;
+
+        // Игрок (квадрат)
+        const player = {
+            x: canvas.width / 2 - 25,
+            y: canvas.height - 30,
+            width: 50,
+            height: 50,
+            speed: 5
+        };
+
+        // Препятствия (падающие прямоугольники)
+        const obstacles = [];
+        const obstacleSpeed = 4;
+        const spawnInterval = 1500;
+        let lastSpawnTime = 0;
+
+        // Управление движением игрока
+        let moveLeft = false;
+        let moveRight = false;
+
+        // Обработчики нажатия клавиш
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                moveLeft = true;
+            }
+            if (e.key === 'ArrowRight') {
+                moveRight = true;
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft') {
+                moveLeft = false;
+            }
+            if (e.key === 'ArrowRight') {
+                moveRight = false;
+            }
+        });
+
+        // Спавн препятствий
+        function spawnObstacle() {
+            const width = Math.random() * 50 + 30;
+            const x = Math.random() * (canvas.width - width);
+            obstacles.push({ x: x, y: 0, width: width, height: 30 });
+        }
+
+        // Отрисовка игрока (квадрат)
+        function drawPlayer() {
+            ctx.fillStyle = '#0095DD';
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+        }
+
+        // Отрисовка препятствий (падающие прямоугольники)
+        function drawObstacles() {
+            ctx.fillStyle = '#FF0000';
+            obstacles.forEach(obstacle => {
+                ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            });
+        }
+
+        // Обновление положения игрока
+        function updatePlayer() {
+            if (moveLeft && player.x > 0) {
+                player.x -= player.speed;
+            }
+            if (moveRight && player.x < canvas.width - player.width) {
+                player.x += player.speed;
+            }
+        }
+
+        // Обновление положения препятствий
+        function updateObstacles() {
+            obstacles.forEach(obstacle => {
+                obstacle.y += obstacleSpeed;
+            });
+        }
+
+        // Проверка столкновений
+        function detectCollisions() {
+            obstacles.forEach((obstacle, index) => {
+                if (player.x + player.width > obstacle.x &&
+                    player.x < obstacle.x + obstacle.width &&
+                    player.y + player.height > obstacle.y &&
+                    player.y < obstacle.y + obstacle.height) {
+                    gameOver = true;
+                    alert("Игра окончена. Ваш счёт: " + score);
+                    document.location.reload();
+                }
+
+                if (obstacle.y > canvas.height) {
+                    obstacles.splice(index, 1); // Удаление препятствия, если оно вышло за экран
+                    score++;
+                    scoreDisplay.textContent = score;
+                }
+            });
+        }
+
+        // Основной игровой цикл
+        function gameLoop(timestamp) {
+            if (gameOver) return;
+
+            if (timestamp - lastSpawnTime > spawnInterval) {
+                spawnObstacle();
+                lastSpawnTime = timestamp;
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPlayer();
+            drawObstacles();
+            updatePlayer();
+            updateObstacles();
+            detectCollisions();
+            requestAnimationFrame(gameLoop);
+        }
+
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+</html>
