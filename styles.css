@@ -1,0 +1,16 @@
+.container {
+    text-align: center;
+    margin-top: 100px;
+    }
+    
+    h1 {
+    font-size: 50px;
+    }
+    
+    a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    }
