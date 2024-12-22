@@ -2,70 +2,102 @@
 <html lang="ru">
 
 <head>
-   <!-- Название страницы, которое отображается в верху вкладки браузера -->
-   <title>Super Mario</title>
-   <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
-   <meta name="viewport" content="width=device-width" initial-scale=1.0>
-   <!-- изображение Марио, отображается перед названием страницы вверху вкладки браузера -->
-   <link rel="icon" href="./image/favicon__mario.png" type="image/png">
-   <!-- подключение файла стилей, который убирает настройки браузера для одинакового отображения страницы во всех браузерах -->
-   <link rel="stylesheet" href="css/resetStyle.css">
-   <!-- подключение файла стилей -->
-   <link rel="stylesheet" href="css/style.css?_v=1">
+    <title>Super Mario</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width" initial-scale=1.0>
+    <link rel="icon" href="./image/favicon__mario.png" type="image/png">
+    <link rel="stylesheet" href="css/resetStyle.css">
+    <link rel="stylesheet" href="css/style.css?_v=1">
+    <style>
+        /* Стили для рекламного блока на весь экран */
+        .ad {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            z-index: 1000;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
 </head>
 
 <body>
-   <div class="wrapper">
-      <main class="main">
-         <!-- Облако -->
-         <img class="cloud_1" src="./image/cloud.png" alt="Облако">
-         <!-- Облако -->
-         <img class="cloud_2" src="./image/cloud.png" alt="Облако">
-         <!-- Облако -->
-         <img class="cloud_3" src="./image/cloud.png" alt="Облако">
-         <!-- Облако -->
-         <img class="cloud_4" src="./image/cloud.png" alt="Облако">
-         <!-- Полка на которой стоит Марио -->
-         <img class="shelf" src="./image/shelf.jpg" alt="Полка на которой стоит Mario">
-         <!-- Изображение Марио -->
-         <div class="mario duble_jump">
-            <img class="mario-img" src="./image/mario.png" alt="Марио">
-         </div>
-         <!-- Зелёная труба -->
-         <img class="green__pipe" src="./image/green__pipe.png" alt="Зеленая труба">
-         <!-- Пол -->
-         <div class="floor">
-            <img class="floor-img" src="./image/floor.jpg" alt="Пол из камней">
-         </div>
+    <div class="wrapper">
+        <main class="main">
+            <img class="cloud_1" src="./image/cloud.png" alt="Облако">
+            <img class="cloud_2" src="./image/cloud.png" alt="Облако">
+            <img class="cloud_3" src="./image/cloud.png" alt="Облако">
+            <img class="cloud_4" src="./image/cloud.png" alt="Облако">
+            <img class="shelf" src="./image/shelf.jpg" alt="Полка на которой стоит Mario">
+            <div class="mario duble_jump">
+                <img class="mario-img" src="./image/mario.png" alt="Марио">
+            </div>
+            <img class="green__pipe" src="./image/green__pipe.png" alt="Зеленая труба">
+            <div class="floor">
+                <img class="floor-img" src="./image/floor.jpg" alt="Пол из камней">
+            </div>
 
-         <div class="container">
-            <section class="data">
+            <div class="container">
+                <section class="data">
+                    <div class="text">
+                        <div class="name">
+                            <div>Coder_helper<div>
+                        </div>
+                        <div>
+                            <div class="list"><span>age</span><span>:</span><span>Unknown</span></div>
+                            <div class="list"><span>studying</span><span>:</span><span>Python</span></div>
+                            <div class="list"><span>location</span><span>:</span><span>Unknown</span></div>
+                        </div>
+                    </div>
+                </section>
+                <section class="links">
+                    <div class="link"><a href="mailto:admin@itsystemshelp.ru">Email</a></div>
+                    <div class="link"><a href="/error">Error</a></div>
+                    <div class="link"><a href="/sponsors">Sponsors</a></div>
+                </section>
+                <!-- Реклама -->
+                <div id="ad" class="ad"></div>
+            </div>
+        </main>
+    </div>
+    <script>
+        // Список рекламных объявлений
+        const ads = [
+            'Реклама 1: Купите наш продукт!',
+            'Реклама 2: Скидка 50% на все!',
+            'Реклама 3: Посетите наш сайт!',
+            'Реклама 4: Подписывайтесь на наш канал!',
+            'Реклама 5: Специальное предложение только сегодня!'
+        ];
 
-               <div class="text">
-                  <!-- Имя -->
-                  <div class="name">
-                     <div>Coder_helper<div>
-                  </div>
-                  <div>
-                     <div class="list"><span>age</span><span>:</span><span>Unknown</span></div>
-                     <div class="list"><span>studying</span><span>:</span><span>Python</span></div>
-                     <div class="list"><span>location</span><span>:</span><span>Unknown</span></div>
+        // Функция для показа случайной рекламы
+        function showAd() {
+            const adElement = document.getElementById('ad');
+            const randomAd = ads[Math.floor(Math.random() * ads.length)];
+            adElement.innerHTML = randomAd;
+            adElement.style.display = 'flex';
 
-                  </div>
-               </div>
-            </section>
-            <!-- Ссылки -->
-            <section class="links">
+            // Скрыть рекламу через 10 секунд
+            setTimeout(() => {
+                adElement.style.display = 'none';
+            }, 10000);
+        }
 
-               <div class="link"><a href="mailto:admin@itsystemshelp.ru">Email</a></div>
-               <div class="link"><a href="/error">Error</a></div>
-               <div class="link"><a href="/sponsors">Sponsors</a></div>
-            </section>
-         </div>
-      </main>
-   </div>
-   <!-- подключение файла javascript -->
-   <script src="js/script.js"></script>
+        // Показ рекламы каждые 2 минуты
+        setInterval(showAd, 120000);
+
+        // Начальный показ рекламы при загрузке страницы
+        window.onload = showAd;
+    </script>
 </body>
 
 </html>
