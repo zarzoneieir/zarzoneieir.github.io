@@ -67,41 +67,13 @@
                     <div class="link"><a href="/error">Error</a></div>
                     <div class="link"><a href="/sponsors">Sponsors</a></div>
                     <div class="link"><a href="https://github.com/coders-oragnizations">Work-github</a></div>
+                    <div class="link"><a href="/statistics">Statistics</a></div>
                 </section>
-                <!-- Реклама -->
-                <div id="ad" class="ad"></div>
+
             </div>
         </main>
     </div>
-    <script>
-        // Список рекламных объявлений
-        const ads = [
-            'Реклама 1: Купите наш продукт!',
-            'Реклама 2: Скидка 50% на все!',
-            'Реклама 3: Посетите наш сайт!',
-            'Реклама 4: Подписывайтесь на наш канал!',
-            'Реклама 5: Специальное предложение только сегодня!'
-        ];
 
-        // Функция для показа случайной рекламы
-        function showAd() {
-            const adElement = document.getElementById('ad');
-            const randomAd = ads[Math.floor(Math.random() * ads.length)];
-            adElement.innerHTML = randomAd;
-            adElement.style.display = 'flex';
-
-            // Скрыть рекламу через 10 секунд
-            setTimeout(() => {
-                adElement.style.display = 'none';
-            }, 10000);
-        }
-
-        // Показ рекламы каждые 2 минуты
-        setInterval(showAd, 150000);
-
-        // Начальный показ рекламы при загрузке страницы
-        window.onload = showAd;
-    </script>
 </body>
 
 </html>

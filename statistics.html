@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f7f7f7;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+            color: #fff;
+        }
+        nav {
+            margin: 20px 0;
+            text-align: center;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #00c6ff;
+        }
+        .container {
+            padding: 50px;
+            flex: 1;
+            text-align: center;
+        }
+        .container h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .currency-selector {
+            margin-bottom: 20px;
+        }
+        .container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .container table, .container th, .container td {
+            border: 1px solid #ddd;
+        }
+        .container th, .container td {
+            padding: 12px;
+            text-align: left;
+        }
+        .container th {
+            background-color: #f2f2f2;
+        }
+        .chart-container {
+            width: 80%;
+            margin: 50px auto;
+        }
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            text-align: center;
+        }
+        footer p {
+            margin: 0;
+            font-size: 1em;
+            color: #fff;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const currencySelector = document.getElementById('currency');
+            currencySelector.addEventListener('change', updateData);
+
+            function updateData() {
+                const selectedCurrency = currencySelector.value;
+                fetch('stat.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const conversionRates = {
+                            'RUB': 1, // Assuming the data is in RUB
+                            'USD': 0.013,
+                            'EUR': 0.011
+                        };
+
+                        const rate = conversionRates[selectedCurrency];
+
+                        // Update table
+                        const table = document.querySelector('table');
+                        table.innerHTML = `
+                            <tr>
+                                <th>Name</th>
+                                <th>Value (${selectedCurrency})</th>
+                            </tr>
+                        `;
+                        data.forEach(item => {
+                            const row = table.insertRow();
+                            const nameCell = row.insertCell(0);
+                            const valueCell = row.insertCell(1);
+                            nameCell.textContent = item.name;
+                            valueCell.textContent = (item.value * rate).toFixed(2);
+                        });
+
+                        // Update chart
+                        const ctx = document.getElementById('priceChart').getContext('2d');
+                        const labels = data.map(item => item.name);
+                        const values = data.map(item => (item.value * rate).toFixed(2));
+
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: `Price Changes (${selectedCurrency})`,
+                                    data: values,
+                                    backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                                    borderColor: 'rgba(0, 123, 255, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            }
+
+            // Initial data load
+            updateData();
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Statistics</h1>
+        <nav>
+            <a href="stylish.html">Home</a>
+            <a href="statistics.html">Statistics</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Statistics Data</h2>
+        <div class="currency-selector">
+            <label for="currency">Select Currency: </label>
+            <select id="currency">
+                <option value="RUB">RUB</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </select>
+        </div>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
+        </table>
+        <div class="chart-container">
+            <canvas id="priceChart"></canvas>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </footer>
+</body>
+</html>

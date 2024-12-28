@@ -1,0 +1,9 @@
+[
+    { "name": "January", "value": 150 },
+    { "name": "February", "value": 200 },
+    { "name": "March", "value": 250 },
+    { "name": "April", "value": 300 },
+    { "name": "May", "value": 350 },
+    { "name": "January", "value": 0.01 },
+    { "name": "February", "value": 1000 }
+]
