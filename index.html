@@ -27,6 +27,30 @@
             text-align: center;
             padding: 20px;
         }
+        
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* расстояние между кнопками */
+        }
+
+        .link {
+            flex: 1 1 200px; /* Задает базовую ширину кнопки и позволяет им растягиваться и сжиматься */
+            box-sizing: border-box;
+        }
+
+        .link a {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            background-color: #ccc; /* Цвет фона кнопки */
+            text-decoration: none;
+            color: #000; /* Цвет текста */
+        }
+
+        .link a:hover {
+            background-color: #aaa; /* Цвет фона кнопки при наведении */
+        }
     </style>
 </head>
 
