@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click the Target Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #game-container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            border: 2px solid #000;
+            background-color: #f0f0f0;
+        }
+
+        #target {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #score-container {
+            margin-top: 20px;
+        }
+
+        #score {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="target"></div>
+    </div>
+    <div id="score-container">
+        <p>Score: <span id="score">0</span></p>
+    </div>
+    <script>
+        const gameContainer = document.getElementById('game-container');
+        const target = document.getElementById('target');
+        const scoreDisplay = document.getElementById('score');
+
+        let score = 0;
+
+        function moveTarget() {
+            const containerRect = gameContainer.getBoundingClientRect();
+            const targetSize = target.getBoundingClientRect().width;
+            const maxX = containerRect.width - targetSize;
+            const maxY = containerRect.height - targetSize;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            target.style.left = `${randomX}px`;
+            target.style.top = `${randomY}px`;
+        }
+
+        target.addEventListener('click', () => {
+            score++;
+            scoreDisplay.textContent = score;
+            moveTarget();
+        });
+
+        moveTarget();
+    </script>
+</body>
+</html>
