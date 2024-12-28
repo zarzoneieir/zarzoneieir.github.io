@@ -54,21 +54,6 @@
         .currency-selector {
             margin-bottom: 20px;
         }
-        .container table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        .container table, .container th, .container td {
-            border: 1px solid #ddd;
-        }
-        .container th, .container td {
-            padding: 12px;
-            text-align: left;
-        }
-        .container th {
-            background-color: #f2f2f2;
-        }
         .chart-container {
             width: 80%;
             margin: 50px auto;
@@ -89,41 +74,35 @@
             const currencySelector = document.getElementById('currency');
             currencySelector.addEventListener('change', updateData);
 
-            function updateData() {
+            const apiKey = '94ccf284841f66a22ca156da'; // Замените на ваш API ключ
+            const apiURL = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/RUB`;
+
+            // Функция для получения реальных курсов валют
+            async function getCurrencyRates() {
+                const response = await fetch(apiURL);
+                const data = await response.json();
+                return data.conversion_rates;
+            }
+
+            async function updateData() {
                 const selectedCurrency = currencySelector.value;
+                const rates = await getCurrencyRates();
+                const rate = rates[selectedCurrency];
+
                 fetch('stat.json')
                     .then(response => response.json())
                     .then(data => {
-                        const conversionRates = {
-                            'RUB': 1, // Assuming the data is in RUB
-                            'USD': 0.013,
-                            'EUR': 0.011
-                        };
-
-                        const rate = conversionRates[selectedCurrency];
-
-                        // Update table
-                        const table = document.querySelector('table');
-                        table.innerHTML = `
-                            <tr>
-                                <th>Name</th>
-                                <th>Value (${selectedCurrency})</th>
-                            </tr>
-                        `;
-                        data.forEach(item => {
-                            const row = table.insertRow();
-                            const nameCell = row.insertCell(0);
-                            const valueCell = row.insertCell(1);
-                            nameCell.textContent = item.name;
-                            valueCell.textContent = (item.value * rate).toFixed(2);
-                        });
-
                         // Update chart
                         const ctx = document.getElementById('priceChart').getContext('2d');
                         const labels = data.map(item => item.name);
                         const values = data.map(item => (item.value * rate).toFixed(2));
 
-                        new Chart(ctx, {
+                        // Destroy previous chart if exists
+                        if (window.chart) {
+                            window.chart.destroy();
+                        }
+
+                        window.chart = new Chart(ctx, {
                             type: 'line',
                             data: {
                                 labels: labels,
@@ -171,12 +150,6 @@
                 <option value="EUR">EUR</option>
             </select>
         </div>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Value</th>
-            </tr>
-        </table>
         <div class="chart-container">
             <canvas id="priceChart"></canvas>
         </div>
