@@ -29,10 +29,15 @@
 
     <script>
         function shortenURL() {
-            const url = document.getElementById('urlInput').value;
+            let url = document.getElementById('urlInput').value.trim();
             if (!url) {
                 alert('Please enter a URL');
                 return;
+            }
+
+            // Добавляем http://, если отсутствует протокол
+            if (!/^https?:\/\//i.test(url)) {
+                url = 'http://' + url;
             }
 
             const shortCode = Math.random().toString(36).substring(2, 8);
@@ -46,7 +51,7 @@
             shortenedUrls.push(shortenedData);
             localStorage.setItem('shortenedUrls', JSON.stringify(shortenedUrls));
 
-            const shortURL = `${window.location.href}?id=${shortCode}`;
+            const shortURL = `${window.location.href.split('?')[0]}?id=${shortCode}`;
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `<div class="short-url">Shortened URL: <a href="${shortURL}" target="_blank">${shortURL}</a></div>`;
         }
