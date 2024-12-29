@@ -5,44 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Site</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
-    <style>
+    <style id="theme-style">
+        /* Default Light Theme */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
             color: #333;
+            font-size: 18px;
         }
 
         header {
             background: linear-gradient(90deg, #1e3c72, #2a5298);
             color: white;
-            padding: 20px 0;
+            padding: 40px 0;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 3.5em;
             font-weight: 600;
         }
 
         nav ul {
             list-style-type: none;
             padding: 0;
-            margin: 10px 0 0;
+            margin: 20px 0 0;
         }
 
         nav ul li {
             display: inline;
-            margin: 0 15px;
+            margin: 0 20px;
         }
 
         nav ul li a {
             color: white;
             text-decoration: none;
-            font-size: 1.1em;
+            font-size: 1.5em;
             transition: color 0.3s;
         }
 
@@ -51,51 +53,113 @@
         }
 
         section {
-            padding: 60px 20px;
+            padding: 80px 20px;
             text-align: center;
             background-color: #fff;
-            margin: 20px 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
 
         section h2 {
-            font-size: 2.2em;
-            margin-bottom: 20px;
+            font-size: 2.8em;
+            margin-bottom: 30px;
             color: #1e3c72;
         }
 
         section p {
-            font-size: 1.1em;
+            font-size: 1.5em;
             margin: 0 auto;
-            max-width: 700px;
-            line-height: 1.6;
+            max-width: 800px;
+            line-height: 1.8;
         }
 
         .music-item {
-            margin: 30px 0;
+            margin: 40px 0;
         }
 
         .music-item h3 {
-            font-size: 1.7em;
-            margin-bottom: 15px;
+            font-size: 2em;
+            margin-bottom: 20px;
             color: #2a5298;
         }
 
         footer {
-            background: #1e3c72;
             color: white;
-            padding: 15px 0;
+            padding: 30px 0;
             text-align: center;
             position: relative;
+            font-size: 1.2em;
         }
 
         footer p {
             margin: 0;
-            font-size: 1em;
         }
+
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #fff;
+            border: 2px solid #2a5298;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Multi-Colored Theme */
+        .multi-colored-theme header {
+            background: linear-gradient(90deg, #ff6f61, #f38b2c);
+        }
+
+        .multi-colored-theme section {
+            background-color: #e0f7fa;
+            color: #01579b;
+        }
+
+        .multi-colored-theme footer {
+            background-color: #81c784;
+            color: #1b5e20;
+        }
+
+        /* Custom Theme (Uses variables to define colors) */
+        .custom-theme header {
+            background-color: var(--header-bg, #1e3c72);
+        }
+
+        .custom-theme section {
+            background-color: var(--section-bg, #fff);
+            color: var(--section-text-color, #333);
+        }
+
+        .custom-theme footer {
+            background-color: var(--footer-bg, #1e3c72);
+            color: var(--footer-text-color, #fff);
+        }
+
+        .color-picker {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border: 2px solid #2a5298;
+            border-radius: 5px;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-picker input {
+            margin: 5px 0;
+        }
+
+        .color-picker label {
+            font-size: 1.1em;
+        }
+
     </style>
 </head>
-<body>
+<body class="light-theme">
     <header>
         <h1>Welcome to Music Site</h1>
         <nav>
@@ -131,5 +195,56 @@
     <footer>
         <p>&copy; 2024 Music Site. All rights reserved.</p>
     </footer>
+
+    <div class="theme-switcher" onclick="switchTheme()">Switch Theme</div>
+
+    <div class="color-picker" id="color-picker">
+        <label for="header-bg">Header Background:</label>
+        <input type="color" id="header-bg" value="#1e3c72" onchange="updateCustomTheme()"><br>
+
+        <label for="section-bg">Section Background:</label>
+        <input type="color" id="section-bg" value="#fff" onchange="updateCustomTheme()"><br>
+
+        <label for="footer-bg">Footer Background:</label>
+        <input type="color" id="footer-bg" value="#1e3c72" onchange="updateCustomTheme()"><br>
+
+        <label for="section-text">Section Text Color:</label>
+        <input type="color" id="section-text" value="#333" onchange="updateCustomTheme()"><br>
+
+        <label for="footer-text">Footer Text Color:</label>
+        <input type="color" id="footer-text" value="#fff" onchange="updateCustomTheme()"><br>
+    </div>
+
+    <script>
+        let currentTheme = 0;
+        const themes = ['light-theme', 'dark-theme', 'blue-theme', 'green-theme', 'red-theme', 'purple-theme', 'multi-colored-theme', 'custom-theme'];
+        
+        function switchTheme() {
+            const body = document.body;
+            body.classList.remove(themes[currentTheme]);
+            currentTheme = (currentTheme + 1) % themes.length; // Cycle through the themes
+            body.classList.add(themes[currentTheme]);
+
+            if (currentTheme === 6) {
+                document.getElementById('color-picker').style.display = 'block'; // Show the custom theme picker for multi-colored theme
+            } else {
+                document.getElementById('color-picker').style.display = 'none'; // Hide color picker for non-custom themes
+            }
+        }
+
+        function updateCustomTheme() {
+            const headerBg = document.getElementById('header-bg').value;
+            const sectionBg = document.getElementById('section-bg').value;
+            const footerBg = document.getElementById('footer-bg').value;
+            const sectionText = document.getElementById('section-text').value;
+            const footerText = document.getElementById('footer-text').value;
+
+            document.documentElement.style.setProperty('--header-bg', headerBg);
+            document.documentElement.style.setProperty('--section-bg', sectionBg);
+            document.documentElement.style.setProperty('--footer-bg', footerBg);
+            document.documentElement.style.setProperty('--section-text-color', sectionText);
+            document.documentElement.style.setProperty('--footer-text-color', footerText);
+        }
+    </script>
 </body>
 </html>
