@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        #result {
+            margin-top: 20px;
+        }
+        .short-url {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>URL Shortener</h1>
+    <input type="text" id="urlInput" placeholder="Enter URL here" size="50">
+    <button onclick="shortenURL()">Shorten</button>
+    <div id="result"></div>
+
+    <script>
+        function shortenURL() {
+            const url = document.getElementById('urlInput').value;
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+
+            const shortCode = Math.random().toString(36).substring(2, 8);
+            const shortenedData = {
+                originalUrl: url,
+                shortCode: shortCode,
+                createdAt: new Date().toISOString()
+            };
+
+            const shortenedUrls = JSON.parse(localStorage.getItem('shortenedUrls')) || [];
+            shortenedUrls.push(shortenedData);
+            localStorage.setItem('shortenedUrls', JSON.stringify(shortenedUrls));
+
+            const shortURL = `${window.location.href}?id=${shortCode}`;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<div class="short-url">Shortened URL: <a href="${shortURL}" target="_blank">${shortURL}</a></div>`;
+        }
+
+        function checkForShortCode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if (id) {
+                const shortenedUrls = JSON.parse(localStorage.getItem('shortenedUrls')) || [];
+                const data = shortenedUrls.find(item => item.shortCode === id);
+                if (data) {
+                    window.location.href = data.originalUrl;
+                } else {
+                    alert('Invalid short URL');
+                }
+            }
+        }
+
+        checkForShortCode();
+    </script>
+</body>
+</html>
