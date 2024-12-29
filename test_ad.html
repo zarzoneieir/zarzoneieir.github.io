@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реклама</title>
+    <style>
+        /* Горизонтальная реклама */
+        .horizontal-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+        .horizontal-banner a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .horizontal-banner a:hover {
+            text-decoration: underline;
+        }
+
+        /* Вертикальная реклама */
+        .vertical-banner {
+            position: fixed;
+            top: 20%;
+            right: 0;
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 15px;
+            width: 200px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+        .vertical-banner a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .vertical-banner a:hover {
+            text-decoration: underline;
+        }
+
+        /* Всплывающая реклама */
+        .popup-banner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            padding-top: 200px;
+            z-index: 1000;
+        }
+        .popup-banner button {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .popup-banner button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // Список рекламных сайтов с типами рекламы
+            var ads = [
+                {
+                    type: 'horizontal',
+                    link: 'http://worksite.itsystemshelp.ru',
+                    text: 'Посетите сайт http://worksite.itsystemshelp.ru!',
+                },
+                {
+                    type: 'vertical',
+                    link: 'http://worksite.itsystemshelp.ru',
+                    text: 'Получите скидки на http://worksite.itsystemshelp.ru!',
+                },
+                {
+                    type: 'popup',
+                    link: 'http://worksite.itsystemshelp.ru',
+                    text: 'Лучшие предложения на http://worksite.itsystemshelp.ru!',
+                }
+            ];
+
+            // Функция для случайного выбора рекламы
+            function getRandomAd(type) {
+                var filteredAds = ads.filter(ad => ad.type === type);
+                return filteredAds[Math.floor(Math.random() * filteredAds.length)];
+            }
+
+            // Горизонтальная реклама
+            var horizontalAd = getRandomAd('horizontal');
+            document.querySelector('.horizontal-banner').style.display = 'block';
+            document.querySelector('.horizontal-banner a').href = horizontalAd.link;
+            document.querySelector('.horizontal-banner').innerHTML = horizontalAd.text + '<br><a href="' + horizontalAd.link + '" target="_blank">Посетить сайт</a>';
+
+            // Вертикальная реклама
+            var verticalAd = getRandomAd('vertical');
+            document.querySelector('.vertical-banner').style.display = 'block';
+            document.querySelector('.vertical-banner a').href = verticalAd.link;
+            document.querySelector('.vertical-banner').innerHTML = verticalAd.text + '<br><a href="' + verticalAd.link + '" target="_blank">Посетить сайт</a>';
+
+            // Всплывающая реклама
+            var popupAd = getRandomAd('popup');
+            document.querySelector('.popup-banner').style.display = 'block';
+            document.querySelector('.popup-banner a').href = popupAd.link;
+            document.querySelector('.popup-banner').innerHTML = popupAd.text + '<br><a href="' + popupAd.link + '" target="_blank">Перейти на сайт</a><br>';
+            document.querySelector('.popup-banner').innerHTML += '<button onclick="closePopup()">Закрыть</button>';
+        };
+
+        // Функция для закрытия всплывающей рекламы
+        function closePopup() {
+            document.querySelector('.popup-banner').style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Горизонтальная реклама -->
+    <div class="horizontal-banner" style="display:none;">
+        <a href="#" target="_blank"></a>
+    </div>
+
+    <!-- Вертикальная реклама -->
+    <div class="vertical-banner" style="display:none;">
+        <a href="#" target="_blank"></a>
+    </div>
+
+    <!-- Всплывающая реклама -->
+    <div class="popup-banner" style="display:none;">
+        <a href="#" target="_blank"></a><br>
+        <button onclick="closePopup()">Закрыть</button>
+    </div>
+
+</body>
+</html>
