@@ -11,14 +11,14 @@
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            background: #f7f7f7;
+            background: #f0f2f5;
             color: #333;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
         header {
-            background: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
             padding: 20px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -37,10 +37,11 @@
             text-decoration: none;
             color: #fff;
             font-size: 1.2em;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
         }
         nav a:hover {
-            color: #00c6ff;
+            color: #ffef61;
+            transform: scale(1.1);
         }
         .container {
             padding: 50px;
@@ -50,13 +51,25 @@
         .container h2 {
             font-size: 2.5em;
             margin-bottom: 20px;
+            color: #333;
         }
         .currency-selector {
             margin-bottom: 20px;
         }
+        .currency-selector select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
         .chart-container {
             width: 80%;
             margin: 50px auto;
+        }
+        .chart-container canvas {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         table {
             width: 80%;
@@ -72,12 +85,20 @@
             text-align: center;
         }
         th {
-            background-color: #f4f4f4;
+            background-color: #6e8efb;
+            color: #fff;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        tr:nth-child(even) td {
+            background-color: #f1f1f1;
         }
         footer {
-            background: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
             padding: 10px;
             text-align: center;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
         }
         footer p {
             margin: 0;
@@ -122,16 +143,41 @@
                                 datasets: [{
                                     label: `Price Changes (${selectedCurrency})`,
                                     data: values,
-                                    backgroundColor: 'rgba(0, 123, 255, 0.2)',
-                                    borderColor: 'rgba(0, 123, 255, 1)',
-                                    borderWidth: 1
+                                    backgroundColor: 'rgba(110, 142, 251, 0.2)',
+                                    borderColor: 'rgba(110, 142, 251, 1)',
+                                    borderWidth: 2,
+                                    pointBackgroundColor: 'rgba(110, 142, 251, 1)',
+                                    pointBorderColor: '#fff',
+                                    pointBorderWidth: 2,
+                                    pointRadius: 5,
+                                    pointHoverRadius: 7
                                 }]
                             },
                             options: {
                                 responsive: true,
                                 scales: {
                                     y: {
-                                        beginAtZero: true
+                                        beginAtZero: true,
+                                        grid: {
+                                            color: 'rgba(0, 0, 0, 0.1)'
+                                        }
+                                    },
+                                    x: {
+                                        grid: {
+                                            color: 'rgba(0, 0, 0, 0.1)'
+                                        }
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'top',
+                                        labels: {
+                                            color: '#333',
+                                            font: {
+                                                size: 14
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -173,6 +219,12 @@
                                 plugins: {
                                     legend: {
                                         position: 'top',
+                                        labels: {
+                                            color: '#333',
+                                            font: {
+                                                size: 14
+                                            }
+                                        }
                                     },
                                     tooltip: {
                                         callbacks: {
@@ -219,8 +271,8 @@
                 <option value="RUB">RUB</option>
                 <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
-                <option value="THB">BAT</option>
-                <option value="KZT">KZT</option>
+                <option value="THB">THB</option>
+                <option value="CNY">CNY</option>
             </select>
         </div>
         <div class="chart-container">
@@ -229,7 +281,17 @@
         <div class="chart-container">
             <canvas id="pieChart"></canvas>
         </div>
-    
+        <div class="chart-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
     </div>
     <footer>
         <p>&copy; 2024 Your Company. All rights reserved.</p>
