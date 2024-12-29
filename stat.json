@@ -54,5 +54,6 @@
     { "name": "April", "value": 250 },
     { "name": "May", "value": 362 },
     { "name": "January", "value": 0.01 },
-    { "name": "February", "value": 1000 }
+    { "name": "February", "value": 1000 },
+    { "name": "January", "value": 1080 }
 ]
