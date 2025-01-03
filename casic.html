@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casino Crush</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #282c34;
+            color: white;
+        }
+        .game {
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 8px;
+            width: 300px;
+            background-color: #444;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #61dafb;
+            border: none;
+            color: black;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #21a1f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Casino Crush</h1>
+    <p>Choose your game and try your luck!</p>
+
+    <div id="crush" class="game">
+        <h2>Crush</h2>
+        <button onclick="playCrush()">Play</button>
+        <p id="crushResult">Result: </p>
+    </div>
+
+    <div id="coinflip" class="game">
+        <h2>Coinflip</h2>
+        <button onclick="playCoinflip()">Flip Coin</button>
+        <p id="coinflipResult">Result: </p>
+    </div>
+
+    <div id="miner" class="game">
+        <h2>Miner</h2>
+        <button onclick="playMiner()">Play Miner</button>
+        <p id="minerResult">Result: </p>
+    </div>
+
+    <div id="plinko" class="game">
+        <h2>Plinko</h2>
+        <button onclick="playPlinko()">Play Plinko</button>
+        <p id="plinkoResult">Result: </p>
+    </div>
+
+    <script>
+        function getRandomOutcome() {
+            return Math.random() < 0.5 ? "Win" : "Lose";
+        }
+
+        function playCrush() {
+            const result = getRandomOutcome();
+            document.getElementById('crushResult').innerText = `Result: ${result}`;
+        }
+
+        function playCoinflip() {
+            const result = Math.random() < 0.5 ? "Heads" : "Tails";
+            document.getElementById('coinflipResult').innerText = `Result: ${result}`;
+        }
+
+        function playMiner() {
+            const result = Math.random() < 0.7 ? "Safe" : "Boom! You hit a mine!";
+            document.getElementById('minerResult').innerText = `Result: ${result}`;
+        }
+
+        function playPlinko() {
+            const positions = ["Left", "Center", "Right"];
+            const randomPosition = positions[Math.floor(Math.random() * positions.length)];
+            const outcome = getRandomOutcome();
+            document.getElementById('plinkoResult').innerText = `Landed: ${randomPosition}, Outcome: ${outcome}`;
+        }
+    </script>
+</body>
+</html>

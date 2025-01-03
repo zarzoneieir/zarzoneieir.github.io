@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Doe - Web Developer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            background-color: #fff;
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        p {
+            font-size: 16px;
+            color: #666;
+            margin: 10px 0 20px;
+            cursor: pointer;
+        }
+        .easter-egg {
+            display: none;
+            font-size: 14px;
+            color: #ff6347;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .easter-egg-2 {
+            display: none;
+            font-size: 14px;
+            color: #ff6347;
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .easter-egg-3 {
+            display: none;
+            font-size: 14px;
+            color: #ff6347;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>John Doe</h1>
+        <p onclick="showEasterEgg()">Web Developer from New York. Passionate about coding, technology, and learning new things.</p>
+        <div class="easter-egg" id="easter-egg">You've found the Easter Egg! 🎉</div>
+        <a href="#" onclick="showEasterEgg2()">Visit My Website</a>
+        <div class="easter-egg-2" id="easter-egg-2">Another Easter Egg found! 🥳</div>
+        <p onclick="showEasterEgg3()">Click here for a surprise!</p>
+        <div class="easter-egg-3" id="easter-egg-3">You are unstoppable! 😎</div>
+    </div>
+
+    <script>
+        function showEasterEgg() {
+            var easterEgg = document.getElementById('easter-egg');
+            easterEgg.style.display = 'block';
+        }
+
+        function showEasterEgg2() {
+            var easterEgg2 = document.getElementById('easter-egg-2');
+            easterEgg2.style.display = 'block';
+        }
+
+        function showEasterEgg3() {
+            var easterEgg3 = document.getElementById('easter-egg-3');
+            easterEgg3.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
