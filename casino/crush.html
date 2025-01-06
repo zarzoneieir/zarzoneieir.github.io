@@ -2,52 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crush Game</title>
     <style>
-        body { text-align: center; background: #222; color: white; }
-        canvas { background: #333; display: block; margin: 20px auto; }
-        button { margin: 10px; padding: 10px 20px; background: #ffcc00; border: none; cursor: pointer; }
+        body { background: #222; color: white; text-align: center; font-family: Arial, sans-serif; }
     </style>
 </head>
 <body>
-    <h1>Crush Game</h1>
-    <p>Press "Launch" and cash out before the rocket explodes!</p>
-    <button onclick="launch()">Launch</button>
-    <button id="cashout" onclick="cashOut()" disabled>Cash Out</button>
-    <canvas id="crushCanvas" width="400" height="400"></canvas>
-    <p id="result"></p>
-
+    <h1>Crush</h1>
+    <p>Watch the rocket fly! Cash out before it crashes.</p>
+    <input id="bet" type="number" placeholder="Enter your bet">
+    <button onclick="startCrush()">Start Game</button>
+    <p id="rocket"></p>
+    <p id="crushResult"></p>
+    <button id="cashOutButton" onclick="cashOut()" disabled>Cash Out</button>
     <script>
-        const canvas = document.getElementById("crushCanvas");
-        const ctx = canvas.getContext("2d");
-        let rocketY = 350, launched = false, cashedOut = false, explosion = false;
+        let multiplier = 1;
         let interval;
 
-        function launch() {
-            if (launched) return;
-            launched = true;
-            document.getElementById("cashout").disabled = false;
-            const explosionTime = Math.random() * 5000 + 2000;
+        function startCrush() {
+            multiplier = 1;
+            document.getElementById('crushResult').innerText = '';
+            document.getElementById('cashOutButton').disabled = false;
+            const user = JSON.parse(localStorage.getItem('user'));
+            const bet = parseInt(document.getElementById('bet').value);
+            if (bet > user.balance) {
+                document.getElementById('crushResult').innerText = "Not enough balance!";
+                return;
+            }
             interval = setInterval(() => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "red";
-                ctx.fillRect(180, rocketY, 40, 100);
-                rocketY -= 2;
-                if (performance.now() > explosionTime) {
+                multiplier += 0.1;
+                document.getElementById('rocket').innerText = `🚀 x${multiplier.toFixed(1)}`;
+                if (Math.random() < 0.01 * multiplier) {
                     clearInterval(interval);
-                    explosion = true;
-                    document.getElementById("result").innerText = "Boom! You lost!";
-                    document.getElementById("cashout").disabled = true;
+                    document.getElementById('cashOutButton').disabled = true;
+                    document.getElementById('crushResult').innerText = "You crashed! You lose.";
+                    user.balance -= bet;
+                    localStorage.setItem('user', JSON.stringify(user));
                 }
-            }, 50);
+            }, 500);
         }
 
         function cashOut() {
-            if (cashedOut || explosion) return;
-            cashedOut = true;
+            const user = JSON.parse(localStorage.getItem('user'));
+            const bet = parseInt(document.getElementById('bet').value);
+            user.balance += bet * multiplier;
+            document.getElementById('crushResult').innerText = `Cashed out at x${multiplier.toFixed(1)}!`;
             clearInterval(interval);
-            document.getElementById("result").innerText = `You cashed out at position: ${400 - rocketY}`;
+            localStorage.setItem('user', JSON.stringify(user));
+            document.getElementById('cashOutButton').disabled = true;
         }
     </script>
 </body>

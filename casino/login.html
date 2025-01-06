@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login or Register</title>
+    <style>
+        body { background: #222; color: white; font-family: Arial, sans-serif; text-align: center; }
+        input, button { margin: 10px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Casino Login</h1>
+    <input id="username" type="text" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <button onclick="register()">Register</button>
+    <p id="message"></p>
+    <script>
+        async function loadUsers() {
+            const response = await fetch('users.json');
+            return response.json();
+        }
+
+        async function saveUsers(users) {
+            const file = new Blob([JSON.stringify(users, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(file);
+            a.download = 'users.json';
+            a.click();
+        }
+
+        async function register() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const users = await loadUsers();
+            if (users.some(user => user.username === username)) {
+                document.getElementById('message').innerText = "Username already exists.";
+                return;
+            }
+            users.push({ username, password, balance: 1000 });
+            saveUsers(users);
+            document.getElementById('message').innerText = "Registration successful!";
+        }
+
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const users = await loadUsers();
+            const user = users.find(user => user.username === username && user.password === password);
+            if (user) {
+                localStorage.setItem('user', JSON.stringify(user));
+                document.getElementById('message').innerText = "Login successful!";
+                window.location.href = 'index.html';
+            } else {
+                document.getElementById('message').innerText = "Invalid username or password.";
+            }
+        }
+    </script>
+</body>
+</html>

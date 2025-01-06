@@ -2,42 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Miner Game</title>
     <style>
-        body { background: #222; color: white; text-align: center; }
-        #grid { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; margin: 20px auto; }
-        .cell { width: 50px; height: 50px; background: #555; display: flex; justify-content: center; align-items: center; cursor: pointer; }
-        .mine { background: red; }
+        body { background: #222; color: white; text-align: center; font-family: Arial, sans-serif; }
     </style>
 </head>
 <body>
-    <h1>Miner Game</h1>
+    <h1>Miner</h1>
+    <p>Pick a square. Avoid bombs!</p>
+    <input id="bet" type="number" placeholder="Enter your bet">
+    <button onclick="startMiner()">Start Game</button>
     <div id="grid"></div>
+    <p id="result"></p>
     <script>
-        const grid = document.getElementById("grid");
-        const rows = 5, cols = 5;
-        const mines = new Set();
-        while (mines.size < 5) {
-            mines.add(Math.floor(Math.random() * rows * cols));
+        const gridSize = 5;
+        let bombPosition = Math.floor(Math.random() * gridSize * gridSize);
+        let pickedPositions = new Set();
+
+        function createGrid() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            for (let i = 0; i < gridSize * gridSize; i++) {
+                const cell = document.createElement('button');
+                cell.style.width = '50px';
+                cell.style.height = '50px';
+                cell.onclick = () => pickSquare(i);
+                grid.appendChild(cell);
+            }
         }
 
-        function createCell(index) {
-            const cell = document.createElement("div");
-            cell.className = "cell";
-            cell.addEventListener("click", () => {
-                if (mines.has(index)) {
-                    cell.classList.add("mine");
-                    alert("Boom! You hit a mine!");
-                } else {
-                    cell.textContent = "Safe";
-                }
-            });
-            return cell;
+        function pickSquare(position) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (pickedPositions.has(position)) return;
+            pickedPositions.add(position);
+            if (position === bombPosition) {
+                document.getElementById('result').innerText = "You hit a bomb! You lose.";
+                user.balance -= parseInt(document.getElementById('bet').value);
+            } else {
+                document.getElementById('result').innerText = "Safe! Continue.";
+                user.balance += parseInt(document.getElementById('bet').value);
+            }
+            localStorage.setItem('user', JSON.stringify(user));
+            updateBalance();
         }
 
-        for (let i = 0; i < rows * cols; i++) {
-            grid.appendChild(createCell(i));
+        function updateBalance() {
+            document.getElementById('result').innerHTML += `<br>Balance: $${JSON.parse(localStorage.getItem('user')).balance}`;
+        }
+
+        function startMiner() {
+            bombPosition = Math.floor(Math.random() * gridSize * gridSize);
+            pickedPositions.clear();
+            createGrid();
+            document.getElementById('result').innerText = '';
         }
     </script>
 </body>
