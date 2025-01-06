@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plinko Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin: 20px 0;
+            color: #ffcc00;
+        }
+        canvas {
+            display: block;
+            margin: 20px auto;
+            background-color: #333;
+            border: 2px solid #ffcc00;
+            border-radius: 10px;
+        }
+        button, input {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #ffcc00;
+            border: none;
+            color: black;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover, input:focus {
+            background-color: #e6b800;
+        }
+        input {
+            text-align: center;
+            width: 100px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Plinko Game</h1>
+    <p>Enter your bet and try your luck!</p>
+    <input type="number" id="betAmount" placeholder="Enter Bet" min="1">
+    <button onclick="startPlinko()">Drop Ball</button>
+    <canvas id="plinkoCanvas" width="400" height="600"></canvas>
+    <p id="result">Result: </p>
+
+    <script>
+        const canvas = document.getElementById("plinkoCanvas");
+        const ctx = canvas.getContext("2d");
+
+        const ballRadius = 10;
+        const pegs = [];
+        const rows = 6; // Number of rows of pegs
+        const cols = 7; // Number of pegs in a row
+        const multiplierZones = [1, 2, 5, 10, 5, 2, 1];
+        let ball = null;
+
+        // Initialize pegs
+        function initPegs() {
+            const spacingX = canvas.width / (cols + 1);
+            const spacingY = canvas.height / (rows + 2);
+
+            pegs.length = 0;
+            for (let row = 1; row <= rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const offsetX = row % 2 === 0 ? spacingX / 2 : 0; // Offset even rows
+                    pegs.push({
+                        x: spacingX * col + spacingX / 2 + offsetX,
+                        y: spacingY * row,
+                        radius: 5,
+                    });
+                }
+            }
+        }
+
+        // Draw game elements
+        function drawPegs() {
+            ctx.fillStyle = "#ffcc00";
+            for (const peg of pegs) {
+                ctx.beginPath();
+                ctx.arc(peg.x, peg.y, peg.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function drawZones() {
+            const zoneWidth = canvas.width / multiplierZones.length;
+            ctx.font = "16px Arial";
+            for (let i = 0; i < multiplierZones.length; i++) {
+                ctx.fillStyle = "#444";
+                ctx.fillRect(zoneWidth * i, canvas.height - 50, zoneWidth, 50);
+                ctx.fillStyle = "white";
+                ctx.textAlign = "center";
+                ctx.fillText(
+                    `x${multiplierZones[i]}`,
+                    zoneWidth * i + zoneWidth / 2,
+                    canvas.height - 20
+                );
+            }
+        }
+
+        function drawBall() {
+            if (ball) {
+                ctx.beginPath();
+                ctx.arc(ball.x, ball.y, ballRadius, 0, Math.PI * 2);
+                ctx.fillStyle = "red";
+                ctx.fill();
+            }
+        }
+
+        function resetCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPegs();
+            drawZones();
+            drawBall();
+        }
+
+        function startPlinko() {
+            const betInput = document.getElementById("betAmount");
+            const bet = parseFloat(betInput.value);
+
+            if (!bet || bet <= 0) {
+                alert("Please enter a valid bet amount!");
+                return;
+            }
+
+            if (Math.random() < 0.3) {
+                // 30% chance to lose
+                document.getElementById("result").innerText = "You lost your bet!";
+                return;
+            }
+
+            if (ball) return; // Prevent multiple balls at the same time
+
+            ball = { x: canvas.width / 2, y: ballRadius, dx: 0, dy: 2 };
+            const interval = setInterval(() => {
+                ball.dy += 0.1; // Gravity effect
+                ball.x += ball.dx;
+                ball.y += ball.dy;
+
+                // Bounce off pegs
+                for (const peg of pegs) {
+                    const dx = ball.x - peg.x;
+                    const dy = ball.y - peg.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < ballRadius + peg.radius) {
+                        ball.dy = -Math.abs(ball.dy) * 0.7; // Bounce effect
+                        ball.dx = (Math.random() - 0.5) * 2; // Random horizontal movement
+                    }
+                }
+
+                // Check boundaries
+                if (ball.x < ballRadius || ball.x > canvas.width - ballRadius) {
+                    ball.dx = -ball.dx;
+                }
+
+                if (ball.y > canvas.height - 50) {
+                    // Check which zone the ball landed in
+                    const zoneWidth = canvas.width / multiplierZones.length;
+                    const zoneIndex = Math.floor(ball.x / zoneWidth);
+                    const multiplier = multiplierZones[zoneIndex];
+                    const winnings = bet * multiplier;
+
+                    document.getElementById("result").innerText =
+                        `You won: ${winnings} (Multiplier: x${multiplier})`;
+                    clearInterval(interval);
+                    ball = null;
+                }
+
+                resetCanvas();
+
+                // Stop if the ball leaves the canvas
+                if (ball.y > canvas.height) {
+                    clearInterval(interval);
+                    ball = null;
+                }
+            }, 16);
+        }
+
+        // Initialize game
+        initPegs();
+        resetCanvas();
+    </script>
+</body>
+</html>

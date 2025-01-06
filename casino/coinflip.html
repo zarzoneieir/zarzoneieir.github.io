@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coinflip Game</title>
+    <style>
+        body { background-color: #222; color: white; text-align: center; font-family: Arial, sans-serif; }
+        canvas { background: #444; margin-top: 20px; border-radius: 10px; }
+        button { padding: 10px 20px; margin-top: 10px; background: #ffcc00; border: none; cursor: pointer; font-size: 1rem; }
+    </style>
+</head>
+<body>
+    <h1>Coinflip Game</h1>
+    <p>Flip the coin and test your luck!</p>
+    <button onclick="flipCoin()">Flip</button>
+    <canvas id="coinCanvas" width="300" height="300"></canvas>
+    <p id="result"></p>
+
+    <script>
+        const canvas = document.getElementById("coinCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let flipping = false;
+
+        function flipCoin() {
+            if (flipping) return;
+            flipping = true;
+            let frames = 0;
+            const interval = setInterval(() => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                frames++;
+                ctx.fillStyle = frames % 2 === 0 ? "gold" : "silver";
+                ctx.beginPath();
+                ctx.arc(150, 150, 100, 0, Math.PI * 2);
+                ctx.fill();
+                if (frames >= 20) {
+                    clearInterval(interval);
+                    const result = Math.random() < 0.5 ? "Heads" : "Tails";
+                    document.getElementById("result").innerText = `Result: ${result}`;
+                    flipping = false;
+                }
+            }, 100);
+        }
+    </script>
+</body>
+</html>
