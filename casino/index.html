@@ -2,27 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Casino Main Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casino Crush</title>
     <style>
-        body { background: #222; color: white; text-align: center; font-family: Arial, sans-serif; }
-        a { color: #0f0; margin: 10px; display: block; text-decoration: none; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #ffcc00;
+        }
+        button {
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 1.2rem;
+            background-color: #ffcc00;
+            border: none;
+            color: black;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #e6b800;
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to Casino</h1>
-    <div id="welcome"></div>
-    <a href="coinflip.html">Play Coinflip</a>
-    <a href="miner.html">Play Miner</a>
-    <a href="crush.html">Play Crush</a>
-    <a href="plinko.html">Play Plinko</a>
-    <a href="login.html">Logout</a>
-    <script>
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (user) {
-            document.getElementById('welcome').innerHTML = `Hello, ${user.username}! Your balance: $${user.balance}`;
-        } else {
-            window.location.href = 'login.html';
-        }
-    </script>
+    <h1>Casino Crush</h1>
+    <div>
+        <button onclick="location.href='plinko.html'">Play Plinko</button>
+        <button onclick="location.href='coinflip.html'">Play Coinflip</button>
+        <button onclick="location.href='miner.html'">Play Miner</button>
+        <button onclick="location.href='crush.html'">Play Crush</button>
+    </div>
 </body>
 </html>
