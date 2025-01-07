@@ -5,30 +5,69 @@
     <title>Roulette Casino Game</title>
     <style>
         body { background: #222; color: white; text-align: center; font-family: Arial, sans-serif; }
-        #rouletteWheel { width: 300px; height: 300px; border-radius: 50%; border: 5px solid #fff; margin: 20px auto; position: relative; }
-        #ball { width: 20px; height: 20px; border-radius: 50%; background: gold; position: absolute; top: 140px; left: 140px; }
+        #rouletteContainer { position: relative; width: 300px; margin: 50px auto; }
+        #rouletteWheel {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            position: absolute;
+            overflow: hidden;
+            transform: rotate(0deg);
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+        .section {
+            width: 50%;
+            height: 50%;
+            position: absolute;
+            transform-origin: 100% 100%;
+        }
+        .red { background-color: red; }
+        .black { background-color: black; }
+        #arrow {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid gold;
+            position: absolute;
+            top: -40px;
+            left: 135px;
+        }
     </style>
 </head>
 <body>
     <h1>Roulette Game</h1>
-    <p>Choose your bet and spin the wheel!</p>
+    <p>Place your bet and spin the wheel!</p>
     <label for="betAmount">Bet Amount: </label>
     <input id="betAmount" type="number" min="1" placeholder="Enter your bet">
     <label for="betColor">Choose Color: </label>
     <select id="betColor">
         <option value="red">Red</option>
         <option value="black">Black</option>
-        <option value="green">Green</option>
     </select>
     <button onclick="spin()">Spin!</button>
     <p id="result"></p>
-    <div id="rouletteWheel">
-        <div id="ball"></div>
+
+    <div id="rouletteContainer">
+        <div id="arrow"></div>
+        <div id="rouletteWheel">
+            <div class="section red" style="transform: rotate(0deg);"></div>
+            <div class="section black" style="transform: rotate(36deg);"></div>
+            <div class="section red" style="transform: rotate(72deg);"></div>
+            <div class="section black" style="transform: rotate(108deg);"></div>
+            <div class="section red" style="transform: rotate(144deg);"></div>
+            <div class="section black" style="transform: rotate(180deg);"></div>
+            <div class="section red" style="transform: rotate(216deg);"></div>
+            <div class="section black" style="transform: rotate(252deg);"></div>
+            <div class="section red" style="transform: rotate(288deg);"></div>
+            <div class="section black" style="transform: rotate(324deg);"></div>
+        </div>
     </div>
 
     <script>
+        const sections = ["red", "black", "red", "black", "red", "black", "red", "black", "red", "black"];
+
         function spin() {
-            const colors = ["red", "black", "green"];
             const betAmount = parseInt(document.getElementById('betAmount').value);
             const betColor = document.getElementById('betColor').value;
 
@@ -37,16 +76,21 @@
                 return;
             }
 
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            document.getElementById('ball').style.backgroundColor = randomColor;
-            document.getElementById('result').innerText = `Result: ${randomColor.toUpperCase()}`;
+            const randomAngle = Math.floor(Math.random() * 360) + 1440; // At least 4 full rotations
+            const wheel = document.getElementById('rouletteWheel');
+            wheel.style.transform = `rotate(${randomAngle}deg)`;
 
-            if (randomColor === betColor) {
-                const winnings = betColor === "green" ? betAmount * 14 : betAmount * 2;
-                document.getElementById('result').innerText += ` You won $${winnings}!`;
-            } else {
-                document.getElementById('result').innerText += " You lost!";
-            }
+            setTimeout(() => {
+                const resultIndex = Math.floor(((randomAngle % 360) + 18) / 36) % 10;
+                const resultColor = sections[resultIndex];
+                document.getElementById('result').innerText = `Result: ${resultColor.toUpperCase()}`;
+                if (resultColor === betColor) {
+                    const winnings = betAmount * 2;
+                    document.getElementById('result').innerText += ` You won $${winnings}!`;
+                } else {
+                    document.getElementById('result').innerText += " You lost!";
+                }
+            }, 4000); // Delay for spin duration
         }
     </script>
 </body>
