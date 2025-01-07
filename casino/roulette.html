@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Roulette Casino Game</title>
+    <style>
+        body { background: #222; color: white; text-align: center; font-family: Arial, sans-serif; }
+        #rouletteWheel { width: 300px; height: 300px; border-radius: 50%; border: 5px solid #fff; margin: 20px auto; position: relative; }
+        #ball { width: 20px; height: 20px; border-radius: 50%; background: gold; position: absolute; top: 140px; left: 140px; }
+    </style>
+</head>
+<body>
+    <h1>Roulette Game</h1>
+    <p>Choose your bet and spin the wheel!</p>
+    <label for="betAmount">Bet Amount: </label>
+    <input id="betAmount" type="number" min="1" placeholder="Enter your bet">
+    <label for="betColor">Choose Color: </label>
+    <select id="betColor">
+        <option value="red">Red</option>
+        <option value="black">Black</option>
+        <option value="green">Green</option>
+    </select>
+    <button onclick="spin()">Spin!</button>
+    <p id="result"></p>
+    <div id="rouletteWheel">
+        <div id="ball"></div>
+    </div>
+
+    <script>
+        function spin() {
+            const colors = ["red", "black", "green"];
+            const betAmount = parseInt(document.getElementById('betAmount').value);
+            const betColor = document.getElementById('betColor').value;
+
+            if (isNaN(betAmount) || betAmount <= 0) {
+                document.getElementById('result').innerText = "Please enter a valid bet amount.";
+                return;
+            }
+
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.getElementById('ball').style.backgroundColor = randomColor;
+            document.getElementById('result').innerText = `Result: ${randomColor.toUpperCase()}`;
+
+            if (randomColor === betColor) {
+                const winnings = betColor === "green" ? betAmount * 14 : betAmount * 2;
+                document.getElementById('result').innerText += ` You won $${winnings}!`;
+            } else {
+                document.getElementById('result').innerText += " You lost!";
+            }
+        }
+    </script>
+</body>
+</html>
