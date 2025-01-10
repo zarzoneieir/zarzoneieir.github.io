@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCP Foundation - Global Storage Example</title>
+    <title>SCP Foundation - Global Entries</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -75,24 +75,6 @@
             <h2>SCP Entries</h2>
             <div id="scp-entries"></div>
         </section>
-
-        <section id="publish">
-            <h2>Publish New SCP</h2>
-            <form id="scp-form">
-                <input type="text" id="scp-id" placeholder="SCP ID" required><br>
-                <input type="text" id="scp-title" placeholder="SCP Title" required><br>
-                <textarea id="scp-description" placeholder="SCP Description" required></textarea><br>
-                <select id="scp-class">
-                    <option value="Safe">Safe</option>
-                    <option value="Euclid">Euclid</option>
-                    <option value="Keter">Keter</option>
-                    <option value="Thaumiel">Thaumiel</option>
-                    <option value="Uncontained">Uncontained</option>
-                    <option value="Esoteric">Esoteric</option>
-                </select><br>
-                <button type="submit">Publish SCP</button>
-            </form>
-        </section>
     </main>
 
     <footer>
@@ -100,71 +82,37 @@
     </footer>
 
     <script>
-        // Глобальное хранилище данных
-        function setGlobalData(key, value) {
-            localStorage.setItem(key, JSON.stringify(value));
-        }
-
-        function getGlobalData(key) {
-            const value = localStorage.getItem(key);
-            return value ? JSON.parse(value) : null;
-        }
-
-        // Загрузка всех SCP объектов из localStorage
+        // Загружаем SCP записи из JSON файла
         function loadSCPEntries() {
-            const scpEntries = getGlobalData('scpEntries') || [];
-            const scpEntriesContainer = document.getElementById('scp-entries');
-            
-            scpEntriesContainer.innerHTML = ''; // Очищаем предыдущие записи
+            fetch('scp_entries.json') // Путь к вашему JSON файлу
+                .then(response => response.json())
+                .then(data => {
+                    const scpEntriesContainer = document.getElementById('scp-entries');
+                    scpEntriesContainer.innerHTML = ''; // Очищаем предыдущие записи
 
-            scpEntries.forEach(entry => {
-                const entryElement = document.createElement('div');
-                entryElement.classList.add('entry');
-                entryElement.classList.add(`class-${entry.class.toLowerCase()}`);
+                    // Перебираем все записи и отображаем их на странице
+                    data.forEach(entry => {
+                        const entryElement = document.createElement('div');
+                        entryElement.classList.add('entry');
+                        entryElement.classList.add(`class-${entry.class.toLowerCase()}`);
 
-                const entryTitle = document.createElement('h3');
-                entryTitle.textContent = `SCP-${entry.id}: ${entry.title}`;
-                entryElement.appendChild(entryTitle);
+                        const entryTitle = document.createElement('h3');
+                        entryTitle.textContent = `SCP-${entry.id}: ${entry.title}`;
+                        entryElement.appendChild(entryTitle);
 
-                const entryDescription = document.createElement('p');
-                entryDescription.textContent = entry.description;
-                entryElement.appendChild(entryDescription);
+                        const entryDescription = document.createElement('p');
+                        entryDescription.textContent = entry.description;
+                        entryElement.appendChild(entryDescription);
 
-                const entryClass = document.createElement('p');
-                entryClass.textContent = `Class: ${entry.class}`;
-                entryElement.appendChild(entryClass);
+                        const entryClass = document.createElement('p');
+                        entryClass.textContent = `Class: ${entry.class}`;
+                        entryElement.appendChild(entryClass);
 
-                scpEntriesContainer.appendChild(entryElement);
-            });
+                        scpEntriesContainer.appendChild(entryElement);
+                    });
+                })
+                .catch(error => console.error('Error loading SCP entries:', error));
         }
-
-        // Обработчик отправки формы
-        document.getElementById('scp-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Предотвращаем стандартное поведение формы
-
-            // Получаем данные из формы
-            const newEntry = {
-                id: document.getElementById('scp-id').value,
-                title: document.getElementById('scp-title').value,
-                description: document.getElementById('scp-description').value,
-                class: document.getElementById('scp-class').value
-            };
-
-            // Получаем текущие записи из localStorage
-            const scpEntries = getGlobalData('scpEntries') || [];
-
-            // Добавляем новый SCP объект
-            scpEntries.push(newEntry);
-
-            // Сохраняем обновленные данные в localStorage
-            setGlobalData('scpEntries', scpEntries);
-
-            // Очистить форму
-            document.getElementById('scp-form').reset();
-
-            // Перезагрузить список SCP объектов
-            loadSCPEntries();
-        });
 
         // Загружаем записи при загрузке страницы
         window.onload = loadSCPEntries;
