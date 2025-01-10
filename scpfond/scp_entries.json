@@ -9,5 +9,13 @@
         "description": "THIS FOUNDATION",
         "class": "Uncontained"
         
+    },
+    {
+        
+        "id": "002",
+        "title": "SCP-002 The phut",
+        "description": "SCP FOUNDATION helper",
+        "class": "Thaumiel"
+        
     }
 ]
