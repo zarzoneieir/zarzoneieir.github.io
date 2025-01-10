@@ -17,5 +17,21 @@
         "description": "SCP FOUNDATION helper",
         "class": "Thaumiel"
         
+    },
+    {
+        
+        "id": "003",
+        "title": "SCP-003 The dryed meat",
+        "description": "Living dryed meat that can kill you like SCP-096",
+        "class": "Keter"
+        
+    },
+    {
+        
+        "id": "096",
+        "title": "SCP-096 The Shy Guy",
+        "description": "SCP-096 is a humanoid creature approximately 2.38 meters tall. The subject has a low amount of muscle mass, and preliminary body mass tests show mild malnutrition. The arms are disproportionately large in relation to the body of the object, each is about 1.5 m long. The skin is mostly devoid of pigmentation, there are no signs of body hair.",
+        "class": "Euclid"
+        
     }
 ]
