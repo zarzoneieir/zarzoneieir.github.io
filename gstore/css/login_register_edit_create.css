@@ -1,0 +1,118 @@
+@import url("components/base.css");
+@import url("components/header.css");
+@import url("components/footer.css");
+@import url("components/error-box.css");
+
+body{
+    background: radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url("../img/background1.jpg");
+    background-size: cover;
+    background-position: center;
+}
+main {
+    margin-top: 0px;
+    height: auto;
+    font-family: "Roboto", sans-serif;
+}
+/* .bg1 {
+    background: radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url("../img/background1.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.bg2 {
+    background: radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url("../img/background2.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.bg3 {
+    background: radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url("../img/background3.gif");
+    background-size: cover;
+    background-position: center; 
+}*/
+main .main-container {
+    margin: auto;
+    padding: 60px 0;
+}
+main .box {
+    padding: 20px 0px;
+    width: 360px;
+    height: auto;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+main .wideBox {
+    width: 460px;
+}
+
+main .formName {
+    font-size: 26px;
+    text-align: center;
+    font-weight: bold;
+}
+
+main form {
+    width: 85%;
+    margin: auto;
+}
+main form label {
+    display: flex;
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+main form input,
+main form select {
+    width: 100%;
+    padding: 7px;
+    box-sizing: border-box;
+    border: 1px solid #808080;
+    border-radius: 6px;
+}
+main form textarea {
+    width: 100%;
+    height: 200px;
+    box-sizing: border-box;
+    resize: none;
+    padding: 5px;
+    border: 1px solid #808080;
+    border-radius: 6px;
+}
+main form .submitBtn {
+    width: 100%;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #57cb9b;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}
+main form .submitBtn:hover {
+    background-color: #1f2024;
+}
+main .box p {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 15px;
+}
+main .box .login-register {
+    text-align: center;
+    color: black;
+    font-size: 15px;
+    margin-top: -10px;
+}
+main .box .login-register a {
+    color: #57cb9b;
+    cursor: pointer;
+}
+
+main .box .login-register a:hover {
+    color: #ffa500;
+}

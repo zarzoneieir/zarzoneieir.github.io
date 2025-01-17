@@ -1,0 +1,20 @@
+@import url('components/base.css');
+@import url('components/header.css');
+@import url('components/footer.css');
+@import url('components/error-box.css');
+
+main {
+    height: 750px;
+    display: flex;
+    background: url("../img/bg.png");
+    background-size: cover;
+    background-position: center;
+}
+main .notFound {
+    margin: auto;
+    text-align: center;
+}
+main .notFound h1 {
+    font-size: 150px;
+    font-weight: bold;
+}
