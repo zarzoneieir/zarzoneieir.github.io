@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StaryKotik Portfolio</title>
+    <script defer src="script.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .music-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: slideAnimation 3s infinite alternate ease-in-out;
+        }
+        .music-bar {
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #ff0000, #ff7300, #ffeb00, #00ff00, #0099ff, #7a00ff, #ff00ff);
+            background-size: 200% 100%;
+            animation: moveBar 300s linear infinite;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        @keyframes slideAnimation {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(20px); }
+        }
+        @keyframes moveBar {
+            0% { background-position: 200% 0; }
+            100% { background-position: 0 0; }
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-sans flex items-center justify-center min-h-screen">
+    <div class="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+        <div class="bg-gray-900 p-8 rounded-2xl shadow-2xl text-center">
+            <h1 class="text-4xl font-bold text-yellow-400">Привет! Я <span class="text-yellow-500">@starykotik</span></h1>
+            <p class="mt-4 text-gray-300">Мне 16 и я (почти) фуллстак Python разработчик. Пишу серверную часть на Flask и Django, работаю с фронтендом на Tailwind.</p>
+            <div class="mt-6 flex justify-center space-x-3">
+                <span class="bg-gray-800 px-4 py-2 rounded-lg text-gray-300">Python</span>
+                <span class="bg-gray-800 px-4 py-2 rounded-lg text-gray-300">Flask</span>
+                <span class="bg-gray-800 px-4 py-2 rounded-lg text-gray-300">Django</span>
+                <span class="bg-gray-800 px-4 py-2 rounded-lg text-gray-300">Tailwind</span>
+            </div>
+        </div>
+        <div class="bg-gray-900 p-8 rounded-2xl shadow-2xl text-center">
+            <h2 class="text-2xl font-bold text-white">Языки программирования</h2>
+            <div class="mt-4 space-y-3">
+                <span class="block bg-gray-800 px-4 py-2 rounded-lg text-green-400">Python - Active</span>
+                <span class="block bg-gray-800 px-4 py-2 rounded-lg text-blue-400">Java - In progress</span>
+                <span class="block bg-gray-800 px-4 py-2 rounded-lg text-gray-400">Rust - In progress</span>
+            </div>
+        </div>
+        <div class="bg-gray-900 p-8 rounded-2xl shadow-2xl text-center md:col-span-2">
+            <h2 class="text-2xl font-bold text-white">Музыка</h2>
+            <div class="mt-4 music-container">
+                <img src="cover.jpg" alt="Music Cover" class="w-16 h-16 rounded-lg">
+                <div class="ml-4">
+                    <p class="text-white text-lg">Found You</p>
+                    <p class="text-gray-400 text-sm">Everchange - 2022</p>
+                    <div class="music-bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
