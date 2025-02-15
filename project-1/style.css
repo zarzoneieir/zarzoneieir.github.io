@@ -1,0 +1,147 @@
+.frame-1,
+.frame-1 * {
+  box-sizing: border-box;
+}
+.frame-1 {
+  background: linear-gradient(
+    90deg,
+    rgba(87, 40, 63, 1) 0%,
+    rgba(72, 21, 47, 1) 49.09545183181763%,
+    rgba(54, 0, 27, 1) 100%
+  );
+  height: 2003px;
+  position: relative;
+  overflow: hidden;
+}
+.rectangle-1 {
+  background: linear-gradient(
+    180deg,
+    rgba(229, 137, 169, 1) 0%,
+    rgba(194, 112, 148, 1) 23.000000417232513%,
+    rgba(153, 82, 123, 1) 50.49999952316284%,
+    rgba(120, 57, 102, 1) 73.00000190734863%,
+    rgba(79, 28, 78, 1) 100%
+  );
+  border-radius: 42px;
+  width: 580px;
+  height: 326px;
+  position: absolute;
+  left: 282px;
+  top: 370px;
+}
+.rectangle-2 {
+  background: linear-gradient(
+    0deg,
+    rgba(229, 137, 169, 1) 0%,
+    rgba(194, 112, 148, 1) 23.000000417232513%,
+    rgba(153, 82, 123, 1) 50.49999952316284%,
+    rgba(120, 57, 102, 1) 73.00000190734863%,
+    rgba(79, 28, 78, 1) 100%
+  );
+  border-radius: 42px;
+  width: 605px;
+  height: 1483px;
+  position: absolute;
+  left: 1093px;
+  top: 260px;
+}
+.c {
+  color: #000000;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 64px;
+  font-weight: 400;
+  position: absolute;
+  left: 1157px;
+  top: 1330px;
+  width: 439px;
+  height: 116px;
+}
+.rectangle-4 {
+  background: linear-gradient(
+    180deg,
+    rgba(229, 137, 169, 1) 0%,
+    rgba(194, 112, 148, 1) 23.000000417232513%,
+    rgba(153, 82, 123, 1) 50.49999952316284%,
+    rgba(120, 57, 102, 1) 73.00000190734863%,
+    rgba(79, 28, 78, 1) 100%
+  );
+  border-radius: 42px;
+  width: 580px;
+  height: 326px;
+  position: absolute;
+  left: 282px;
+  top: 1292px;
+}
+.begula-5 {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  position: absolute;
+  left: 358px;
+  top: 453px;
+  width: 432px;
+  height: 213px;
+}
+._1-begula {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  position: absolute;
+  left: 335px;
+  top: 1359px;
+  width: 432px;
+  height: 213px;
+}
+.java {
+  color: #000000;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 64px;
+  font-weight: 400;
+  position: absolute;
+  left: 1157px;
+  top: 444px;
+  width: 439px;
+  height: 116px;
+}
+.c2 {
+  color: #000000;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 64px;
+  font-weight: 400;
+  position: absolute;
+  left: 1157px;
+  top: 1108px;
+  width: 439px;
+  height: 116px;
+}
+.typescript {
+  color: #000000;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 64px;
+  font-weight: 400;
+  position: absolute;
+  left: 1157px;
+  top: 666px;
+  width: 439px;
+  height: 116px;
+}
+.html {
+  color: #000000;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 64px;
+  font-weight: 400;
+  position: absolute;
+  left: 1157px;
+  top: 886px;
+  width: 439px;
+  height: 116px;
+}
