@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нет подключения к интернету</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+            padding: 50px 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #d32f2f;
+        }
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #d32f2f;
+        }
+        button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #3367d6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">⚠️</div>
+        <h1>Нет подключения к интернету</h1>
+        <p>Проверьте ваше интернет-соединение и попробуйте снова.</p>
+        <p>Возможные решения:</p>
+        <ul style="text-align: left; max-width: 400px; margin: 0 auto;">
+            <li>Проверьте подключение кабеля или Wi-Fi</li>
+            <li>Перезагрузите роутер</li>
+            <li>Попробуйте отключить и снова включить режим "В самолёте"</li>
+            <li>Проверьте, оплачен ли интернет у вашего провайдера</li>
+        </ul>
+        <button onclick="window.location.reload();">Попробовать снова</button>
+    </div>
+
+    <script>
+        // Проверка подключения при загрузке страницы
+        window.addEventListener('load', function() {
+            if (navigator.onLine) {
+                // Если интернет появился, перезагружаем страницу
+                window.location.reload();
+            }
+        });
+        
+        // Проверка при восстановлении соединения
+        window.addEventListener('online', function() {
+            window.location.reload();
+        });
+    </script>
+</body>
+</html>
